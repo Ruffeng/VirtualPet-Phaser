@@ -42,11 +42,15 @@ var GameState = {
     this.setButtons();
 
     this.selectedItem = null;
+    // Let's block the user interface because you are interacting with the user
+    this.uiBlocked = false;
   },
+
   printBackground: function() {
    this.background = this.game.add.sprite(0, 0, 'backyard');
    return this.background
   },
+
   printPet: function() {
     this.pet = this.game.add.sprite(100,400,'pet');
     this.pet.anchor.setTo(0.5);
@@ -58,6 +62,7 @@ var GameState = {
     this.pet.inputEnabled = true;
     this.pet.input.enableDrag();
   },
+
   printApple: function() {
     this.apple = this.game.add.sprite(72,570,'apple');
     this.apple.anchor.setTo(0.5);
@@ -65,6 +70,7 @@ var GameState = {
     this.apple.customParams = {health: 20};
     this.apple.events.onInputDown.add(this.pickItem, this);
   },
+
   printCandy: function() {
     this.candy = this.game.add.sprite(144,570,'candy');
     this.candy.anchor.setTo(0.5);
@@ -72,6 +78,7 @@ var GameState = {
     this.candy.customParams = {health: -10, fun: 10};
     this.candy.events.onInputDown.add(this.pickItem, this);
   },
+
   printToy: function() {
     this.toy = this.game.add.sprite(216,570,'toy');
     this.toy.anchor.setTo(0.5);
@@ -79,23 +86,41 @@ var GameState = {
     this.toy.customParams = {fun: 20};
     this.toy.events.onInputDown.add(this.pickItem, this);
   },
+
   printRotate: function() {
     this.rotate = this.game.add.sprite(288,570,'rotate');
     this.rotate.anchor.setTo(0.5);
     this.rotate.inputEnabled = true;
     this.rotate.events.onInputDown.add(this.rotatePet, this);
   },
+
   setButtons: function(){
     this.buttons = [this.apple, this.candy, this.toy, this.rotate];
   },
+
   pickItem: function(sprite, event) {
-    console.log('pick item');
-    console.log(this);
-  },
-  rotatePet: function(sprite, event) {
-    console.log('rotate item');
+    if(!this.uiBlocked){
+      this.clearSelection();
+      // Transparent sprite
+      sprite.alpha = 0.4
+      this.selectedItem = sprite;
+    }
   },
 
+  rotatePet: function(sprite, event) {
+    if(!this.uiBlocked){
+      console.log('rotating...');
+      this.uiBlocked = true;
+      this.clearSelection();
+      sprite.alpha = 0.4;
+    }
+  },
+  clearSelection: function () {
+    this.buttons.forEach(function(element, index){
+      element.alpha = 1;
+    });
+    this.selectedItem = null;
+  },
 };
 
 //initiate the Phaser framework
