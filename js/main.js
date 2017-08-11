@@ -25,18 +25,41 @@ var GameState = {
   },
   //executed after everything is loaded
   create: function() {
-    this.background = this.game.add.sprite(0, 0, 'backyard');
+    this.printBackground();
+    this.printPet();
+    this.printApple();
+    this.printCandy();
+    this.printToy();
+    this.printRotate();
+  },
 
+
+
+
+
+  printBackground: function() {
+   this.background = this.game.add.sprite(0, 0, 'backyard');
+   return this.background
+  },
+  printPet: function() {
     this.pet = this.game.add.sprite(100,400,'pet');
     this.pet.anchor.setTo(0.5);
     // Custom properties
     this.pet.customParams = {health: 100, fun: 100};
-
+  },
+  printApple: function() {
     this.apple = this.game.add.sprite(72,570,'apple');
+  },
+  printCandy: function() {
     this.candy = this.game.add.sprite(144,570,'candy');
+  },
+  printToy: function() {
     this.toy = this.game.add.sprite(216,570,'toy');
+  },
+  printRotate: function() {
     this.rotate = this.game.add.sprite(288,570,'rotate');
   },
+
 };
 
 //initiate the Phaser framework
