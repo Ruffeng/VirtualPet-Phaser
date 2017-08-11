@@ -48,7 +48,9 @@ var GameState = {
 
   printBackground: function() {
    this.background = this.game.add.sprite(0, 0, 'backyard');
-   return this.background
+   this.background.inputEnabled = true;
+   this.background.events.onInputDown.add(this.placeItem.bind(this));
+   return this.background;
   },
 
   printPet: function() {
@@ -109,7 +111,6 @@ var GameState = {
 
   rotatePet: function(sprite, event) {
     if(!this.uiBlocked){
-      console.log('rotating...');
       this.uiBlocked = true;
       this.clearSelection();
       sprite.alpha = 0.4;
@@ -124,16 +125,29 @@ var GameState = {
         this.uiBlocked = false;
         sprite.alpha = 1;
         this.pet.customParams.fun += 10;
-      }, this);
+      }.bind(this));
       // Starting the animation;
       petRotation.start();
     }
   },
+
   clearSelection: function () {
     this.buttons.forEach(function(element, index){
       element.alpha = 1;
     });
     this.selectedItem = null;
+  },
+
+  placeItem: function(sprite, event){
+    // Set X and Y When you press at some place from your background
+    if(this.selectedItem && !this.uiBlocked){
+      var x = event.position.x;
+      var y = event.position.y;
+
+      var newItem = this.game.add.sprite(x, y, this.selectedItem.key);
+      newItem.anchor.setTo(0.5);
+      newItem.customParams = this.selectedItem.customParams;
+    }
   },
 };
 
