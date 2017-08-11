@@ -39,6 +39,9 @@ var GameState = {
     this.printCandy();
     this.printToy();
     this.printRotate();
+    this.setButtons();
+
+    this.selectedItem = null;
   },
   printBackground: function() {
    this.background = this.game.add.sprite(0, 0, 'backyard');
@@ -81,6 +84,9 @@ var GameState = {
     this.rotate.anchor.setTo(0.5);
     this.rotate.inputEnabled = true;
     this.rotate.events.onInputDown.add(this.rotatePet, this);
+  },
+  setButtons: function(){
+    this.buttons = [this.apple, this.candy, this.toy, this.rotate];
   },
   pickItem: function(sprite, event) {
     console.log('pick item');
