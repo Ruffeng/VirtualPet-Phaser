@@ -113,6 +113,20 @@ var GameState = {
       this.uiBlocked = true;
       this.clearSelection();
       sprite.alpha = 0.4;
+      // Creating a tween( Animation )
+      var petRotation = this.game.add.tween(this.pet);
+      // Setting the animation and the timeout
+      petRotation.to({angle: '+720'},1000);
+      // Trigger a method when animation completed
+      // LOOK THAT WE ARE PASSING THIS AS SECOND PARAM
+      // TO KEEP THE SCOPE OF THE "THIS"
+      petRotation.onComplete.add(function(){
+        this.uiBlocked = false;
+        sprite.alpha = 1;
+        this.pet.customParams.fun += 10;
+      }, this);
+      // Starting the animation;
+      petRotation.start();
     }
   },
   clearSelection: function () {
