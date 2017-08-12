@@ -56,6 +56,9 @@ var GameState = {
   printPet: function() {
     this.pet = this.game.add.sprite(100,400,'pet');
     this.pet.anchor.setTo(0.5);
+    // Animation (nameAnimations, arrayofFramesToShow,FramesPerSecond, loop?)
+    this.pet.animations.add('funnyFaces',[1,2,3,2,1], 7, false);
+
     // Custom properties
     this.pet.customParams = {health: 100, fun: 100};
 
@@ -153,6 +156,7 @@ var GameState = {
       petMovement.to({x: x, y: y}, 700);
       petMovement.onComplete.add(function(){
 
+          this.pet.animations.play('funnyFaces');
           this.uiBlocked = false;
 
           newItem.destroy();
@@ -167,6 +171,8 @@ var GameState = {
       petMovement.start();
     }
   },
+
+
 };
 
 //initiate the Phaser framework
